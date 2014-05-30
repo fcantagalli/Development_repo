@@ -1,0 +1,7 @@
+#git ignore
+
+# mac file system
+.DS_Store
+
+#java
+.class
