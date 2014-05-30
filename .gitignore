@@ -1,0 +1,9 @@
+#gitignore
+
+#mac file system
+.DS_Store
+
+#phpmyadmin
+phpmyadmin/
+
+
