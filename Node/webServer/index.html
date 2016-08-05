@@ -1,0 +1,98 @@
+
+
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="utf-8" />
+        <title>Chart.js demo</title>
+        <script src='Chart.js'></script>
+    </head>
+    <body>
+
+        <canvas id="buyers" width="500" height="70"></canvas>
+        <canvas id="barCanvas" width="500" height="70"></canvas>
+        <canvas id="randomCanvas" width="500" height="70"></canvas>
+
+        <script>
+            var canvas = document.getElementById("buyers");
+            var ctx = canvas.getContext("2d");
+
+            var buyerData = {
+            	labels : ["January","February","March","April","May","June"],
+            	datasets : [
+            		{
+            			fillColor : "rgba(172,194,132,0.4)",
+            			strokeColor : "#ACC26D",
+            			pointColor : "#fff",
+            			pointStrokeColor : "#9DB86D",
+            			data : [203,156,99,251,305,247]
+            		}
+            	]
+            }
+
+            var myNewChart = new Chart(ctx , {
+                type: "line",
+                data: buyerData,
+            });
+        </script>
+
+        <script>
+            var barCanvasCtx = document.getElementById("barCanvas").getContext("2d");
+
+            var barData = {
+            	labels : ["January","February","March","April","May","June"],
+            	datasets : [
+            		{
+            			fillColor : "#48A497",
+            			strokeColor : "#48A4D1",
+            			data : [456,479,324,569,702,600]
+            		},
+            		{
+            			fillColor : "rgba(73,188,170,0.4)",
+            			strokeColor : "rgba(72,174,209,0.4)",
+            			data : [364,504,605,400,345,320]
+            		}
+
+            	]
+            }
+
+            var mybarChart = new Chart(barCanvasCtx, {
+                type: "bar",
+                data: barData,
+            });
+        </script>
+
+        <script>
+            var dData = function() {
+                return Math.round(Math.random() * 90) + 10;
+            };
+
+            var barData = {
+                labels: ['dD 1', 'dD 2', 'dD 3', 'dD 4',
+                       'dD 5', 'dD 6', 'dD 7', 'dD 8'],
+                datasets: [{
+                fillColor: 'rgba(0,60,100,1)',
+                strokeColor: 'black',
+                data: [dData(), dData(), dData(), dData(),
+                       dData(), dData(), dData(), dData()]
+                }]
+            }
+            var index = 11;
+            var randomCtx = document.getElementById('randomCanvas').getContext('2d');
+            var randomBarChart = new Chart(randomCtx, {
+              type: "bar",
+              data: barData,
+              roptions: {
+                responsive: true
+              }
+            });
+
+            setInterval(function() {
+              barData.data.shift();
+              barData.data.unshift(dData());
+              randomBarChart.update();
+            }, 3000);
+        </script>
+
+    </body>
+</html>
