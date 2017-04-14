@@ -2,6 +2,7 @@
 
 # mac file system
 .DS_Store
+target/
 
 #java
-.class
+*.class

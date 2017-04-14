@@ -5,13 +5,14 @@
     <head>
         <meta charset="utf-8" />
         <title>Chart.js demo</title>
-        <script src='Chart.js'></script>
+        <script src='Chart.min.js'></script>
+        <script src="http://cdnjs.cloudflare.com/ajax/libs/jquery/2.1.3/jquery.min.js"></script>
     </head>
     <body>
 
         <canvas id="buyers" width="500" height="70"></canvas>
         <canvas id="barCanvas" width="500" height="70"></canvas>
-        <canvas id="randomCanvas" width="500" height="70"></canvas>
+        <canvas id="randomCanvas" width="500" height="50"></canvas>
 
         <script>
             var canvas = document.getElementById("buyers");
@@ -30,10 +31,43 @@
             	]
             }
 
-            var myNewChart = new Chart(ctx , {
+            var Trends = new Chart(ctx , {
                 type: "line",
                 data: buyerData,
+                options: {
+                    animation: {
+                        onComplete: function(animation) {
+                            ctx.font = "48px serif";
+                            ctx.fillStyle = '#800000';
+                            ctx.textAlign="center";
+                            $(Trends.data.datasets).each(function(idx,dataset) {
+                                console.log(dataset);
+                                $(dataset.data).each(function(idx, data) {
+                                    console.log(data);
+                                    Trends.chart.ctx.fillText("OIIIII", data, 0);
+                                });
+                            });
+                        }
+                        // onProgress: function(animation) {
+                        //     drawDatasetPointsLabels(Trends, ctx)
+                        // }
+                    }
+                }
             });
+            function drawDatasetPointsLabels(Trends, ctx) {
+
+                $(Trends.datasets).each(function(idx,dataset){
+                    // First dataset is shifted off the scale line.
+                    // Don't write to the canvas for the null placeholder.
+                    alert("BLABLA")
+                    $(dataset.points).each(function(pdx,pointinfo){
+                        // if ( pointinfo.value !== null ) {
+                        //
+                        //     ctx.fillText(pointinfo.value,pointinfo.x,pointinfo.y - 15);
+                        // }
+                    });
+                });
+            }
         </script>
 
         <script>
@@ -86,12 +120,6 @@
                 responsive: true
               }
             });
-
-            setInterval(function() {
-              barData.data.shift();
-              barData.data.unshift(dData());
-              randomBarChart.update();
-            }, 3000);
         </script>
 
     </body>
